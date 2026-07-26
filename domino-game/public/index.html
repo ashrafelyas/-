@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فطيس 🁫</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="lobby-screen" class="screen">
+  <div class="card">
+    <h1>🁫 فطيس</h1>
+    <div class="field">
+      <label>اسمك</label>
+      <input id="name-input" type="text" placeholder="اكتب اسمك">
+    </div>
+
+    <div class="field">
+      <label>وضع اللعب (عند إنشاء غرفة جديدة)</label>
+      <select id="mode-select">
+        <option value="teams">أربعة لاعبين (فريقين 2+2)</option>
+        <option value="solo2">لاعبان (فردي + سحب من الحوض)</option>
+        <option value="solo3">ثلاثة لاعبين (فردي، بدون بلاطة صفر/صفر)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>مفتاح الأدمن (فقط لإنشاء غرفة جديدة)</label>
+      <input id="admin-key-input" type="password" placeholder="السر الخاص بك">
+    </div>
+
+    <div class="lobby-actions">
+      <button id="create-room-btn" class="btn primary">إنشاء غرفة جديدة (أدمن)</button>
+      <div class="divider">أو</div>
+      <input id="room-code-input" type="text" placeholder="كود الغرفة" maxlength="6">
+      <div class="join-row">
+        <button id="join-player-btn" class="btn">انضمام كلاعب</button>
+        <button id="join-spectator-btn" class="btn secondary">انضمام كمتفرج</button>
+      </div>
+    </div>
+    <p id="lobby-error" class="error"></p>
+  </div>
+</div>
+
+<div id="game-screen" class="screen hidden">
+
+  <div id="scoreboard"></div>
+
+  <div id="banner" class="hidden"></div>
+
+  <div id="seats"></div>
+
+  <div id="board-area">
+    <div id="board"></div>
+  </div>
+
+  <div id="turn-indicator"></div>
+
+  <div id="my-hand"></div>
+
+  <div id="controls">
+    <button id="pass-btn" class="btn">تمرير 🚫</button>
+    <button id="draw-btn" class="btn secondary hidden">اسحب من الحوض 🁢 (<span id="boneyard-count">0</span>)</button>
+    <button id="lock-btn" class="btn danger hidden">قفلة 🔒</button>
+    <button id="choose-starter-btn" class="btn primary hidden">أنا أبدأ 🎬</button>
+  </div>
+
+  <div id="admin-panel" class="hidden">
+    <h3>لوحة الأدمن</h3>
+    <button id="invite-btn" class="btn">نسخ رابط الدعوة (واتساب)</button>
+    <button id="start-match-btn" class="btn primary">بدء الجولة</button>
+    <button id="next-round-btn" class="btn hidden">توزيع يد جديدة</button>
+    <button id="remove-losers-btn" class="btn danger hidden">إخراج الخاسر(ين) وبدء مباراة جديدة</button>
+    <div class="assign-admin">
+      <input id="new-admin-name" placeholder="اسم الحاضر">
+      <button id="assign-admin-btn" class="btn secondary">تعيين أدمن</button>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div class="panel" id="chat-panel">
+      <h4>الشات 💬</h4>
+      <ul id="chat-list"></ul>
+      <div class="chat-input-row">
+        <input id="chat-input" type="text" placeholder="اكتب رسالة..." maxlength="500">
+        <button id="chat-send-btn" class="btn">إرسال</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h4>المتفرجون</h4>
+      <ul id="spectator-list"></ul>
+    </div>
+    <div class="panel">
+      <h4>سجل الأدوار</h4>
+      <ul id="history-list"></ul>
+    </div>
+    <div class="panel">
+      <h4>الأدمن</h4>
+      <ul id="admin-list"></ul>
+    </div>
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+</body>
+</html>
